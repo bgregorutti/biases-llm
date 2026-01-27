@@ -1,0 +1,56 @@
+{
+  "models": [
+    {
+      "id": "gpt-4",
+      "name": "GPT-4",
+      "provider": "openai",
+      "api_type": "openai",
+      "requires_api_key": true,
+      "env_key": "OPENAI_API_KEY"
+    },
+    {
+      "id": "gpt-3.5-turbo",
+      "name": "GPT-3.5 Turbo",
+      "provider": "openai",
+      "api_type": "openai",
+      "requires_api_key": true,
+      "env_key": "OPENAI_API_KEY"
+    },
+    {
+      "id": "claude-sonnet-4",
+      "name": "Claude Sonnet 4",
+      "provider": "anthropic",
+      "api_type": "anthropic",
+      "model_name": "claude-sonnet-4-20250514",
+      "requires_api_key": true,
+      "env_key": "ANTHROPIC_API_KEY"
+    },
+    {
+      "id": "claude-opus-4",
+      "name": "Claude Opus 4",
+      "provider": "anthropic",
+      "api_type": "anthropic",
+      "model_name": "claude-opus-4-20250514",
+      "requires_api_key": true,
+      "env_key": "ANTHROPIC_API_KEY"
+    },
+    {
+      "id": "lm-studio-default",
+      "name": "LM Studio (Local)",
+      "provider": "lm-studio",
+      "api_type": "openai",
+      "endpoint_env": "LM_STUDIO_ENDPOINT",
+      "model_name": "local-model",
+      "requires_api_key": false
+    },
+    {
+      "id": "lm-studio-default",
+      "name": "LM Studio (Local)",
+      "provider": "lm-studio",
+      "api_type": "openai",
+      "endpoint_env": "LM_STUDIO_ENDPOINT",
+      "model_name": "google/gemma-3-1b",
+      "requires_api_key": false
+    }
+  ]
+}

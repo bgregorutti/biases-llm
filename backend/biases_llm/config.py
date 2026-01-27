@@ -36,7 +36,7 @@ class Settings(BaseSettings):
     )
 
     class Config:
-        env_file = ".env"
+        env_file = "../.env"
         env_file_encoding = "utf-8"
         populate_by_name = True
 
@@ -75,7 +75,7 @@ class ConfigManager:
 
     def load_bias_prompts(self) -> List:
         """Load pre-built bias test prompts from JSON file"""
-        prompts_file = self.config_dir / "bias_test_prompts.json"
+        prompts_file = self.config_dir / "bias_test_prompts_v2.json"
 
         if not prompts_file.exists():
             print(f"Warning: Bias prompts file not found at {prompts_file}")
@@ -142,7 +142,7 @@ class ConfigManager:
             errors.append("Model configuration file not found")
 
         # Check if bias prompts file exists
-        if not (self.config_dir / "bias_test_prompts.json").exists():
+        if not (self.config_dir / "bias_test_prompts_v2.json").exists():
             warnings.append("Bias prompts file not found - pre-built tests will be unavailable")
 
         return {
