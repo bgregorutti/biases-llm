@@ -3,7 +3,7 @@ Base adapter interface for LLM providers
 """
 from abc import ABC, abstractmethod
 from typing import Dict, Optional
-from backend.models.schemas import ModelResponse
+from biases_llm.models.schemas import ModelResponse
 
 
 class LLMAdapter(ABC):

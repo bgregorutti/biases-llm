@@ -46,7 +46,10 @@ class ConfigManager:
 
     def __init__(self):
         self.settings = Settings()
-        self.config_dir = Path(__file__).parent.parent / "config"
+        # Get project root directory (parent of backend folder)
+        self.project_root = Path(__file__).parent.parent.parent
+        self.config_dir = self.project_root / "config"
+        self.frontend_dir = self.project_root / "frontend"
         self.models_config: Dict = {}
         self.bias_prompts: List = []
 

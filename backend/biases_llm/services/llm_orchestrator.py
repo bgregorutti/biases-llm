@@ -4,11 +4,11 @@ LLM Orchestrator for coordinating parallel queries to multiple models
 import asyncio
 from typing import List
 from datetime import datetime
-from backend.models.schemas import ModelResponse, ComparisonResponse
-from backend.services.llm_adapter import LLMAdapter
-from backend.services.openai_adapter import OpenAIAdapter
-from backend.services.anthropic_adapter import AnthropicAdapter
-from backend.config import config_manager
+from biases_llm.models.schemas import ModelResponse, ComparisonResponse
+from biases_llm.services.llm_adapter import LLMAdapter
+from biases_llm.services.openai_adapter import OpenAIAdapter
+from biases_llm.services.anthropic_adapter import AnthropicAdapter
+from biases_llm.config import config_manager
 
 
 class LLMOrchestrator:

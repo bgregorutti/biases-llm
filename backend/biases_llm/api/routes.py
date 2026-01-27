@@ -4,7 +4,7 @@ API routes for the LLM Bias Testing application
 from typing import List
 from datetime import datetime
 from fastapi import APIRouter, HTTPException, status
-from backend.models.schemas import (
+from biases_llm.models.schemas import (
     QueryRequest,
     ComparisonResponse,
     ModelsListResponse,
@@ -13,8 +13,8 @@ from backend.models.schemas import (
     BiasPrompt,
     HealthResponse
 )
-from backend.config import config_manager
-from backend.services.llm_orchestrator import orchestrator
+from biases_llm.config import config_manager
+from biases_llm.services.llm_orchestrator import orchestrator
 
 router = APIRouter(prefix="/api")
 

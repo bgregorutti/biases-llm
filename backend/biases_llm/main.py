@@ -4,9 +4,8 @@ FastAPI main application for LLM Bias Testing
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from pathlib import Path
-from backend.config import config_manager
-from backend.api.routes import router
+from biases_llm.config import config_manager
+from biases_llm.api.routes import router
 
 # Create FastAPI app
 app = FastAPI(
@@ -28,9 +27,8 @@ app.add_middleware(
 app.include_router(router)
 
 # Mount static files for frontend
-frontend_path = Path(__file__).parent.parent / "frontend"
-if frontend_path.exists():
-    app.mount("/", StaticFiles(directory=str(frontend_path), html=True), name="frontend")
+if config_manager.frontend_dir.exists():
+    app.mount("/", StaticFiles(directory=str(config_manager.frontend_dir), html=True), name="frontend")
 
 
 @app.on_event("startup")
