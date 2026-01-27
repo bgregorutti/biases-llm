@@ -48,7 +48,9 @@ cd /Users/baptistegregorutti/Documents/Repositories/gitlab/introduction-to-ai/ap
 ### 2. Install Python Dependencies
 
 ```bash
-pip install -r requirements.txt
+cd backend
+uv sync
+source .venv/bin/activate
 ```
 
 ### 3. Configure Environment Variables
