@@ -70,12 +70,15 @@ const ComparisonView = {
         } else {
             content.className = 'bg-gray-50 rounded p-3';
 
-            // Detect and highlight potential bias indicators
-            const highlightedText = this.highlightBiasIndicators(response.response);
+            // Parse markdown and sanitize
+            const markdownHtml = DOMPurify.sanitize(marked.parse(response.response, { breaks: true }));
 
             content.innerHTML = `
-                <p class="text-sm text-gray-800 whitespace-pre-wrap">${highlightedText}</p>
+                <div class="text-sm text-gray-800 prose prose-sm max-w-none">${markdownHtml}</div>
             `;
+
+            // Apply bias highlighting to the rendered HTML
+            this.highlightBiasIndicatorsInDOM(content);
         }
 
         card.appendChild(content);
@@ -84,42 +87,71 @@ const ComparisonView = {
     },
 
     /**
-     * Highlight potential bias indicators in text
-     * @param {string} text - Response text
-     * @returns {string} HTML with highlighted indicators
+     * Highlight potential bias indicators in rendered HTML DOM
+     * @param {HTMLElement} element - The DOM element containing rendered markdown
      */
-    highlightBiasIndicators(text) {
-        if (!text) return '';
+    highlightBiasIndicatorsInDOM(element) {
+        const genderPronouns = ['he', 'him', 'his', 'she', 'her', 'hers'];
+        const genderWords = ['man', 'woman', 'male', 'female', 'boy', 'girl'];
 
-        // Escape HTML
-        let escapedText = text
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
+        // Create a combined regex pattern for all bias indicators
+        const allWords = [...genderPronouns, ...genderWords];
+        const pattern = new RegExp(`\\b(${allWords.join('|')})\\b`, 'gi');
 
-        // Highlight gendered pronouns
-        const genderPronouns = ['he', 'him', 'his', 'she', 'her', 'hers', 'He', 'Him', 'His', 'She', 'Her', 'Hers'];
-        genderPronouns.forEach(pronoun => {
-            const regex = new RegExp(`\\b${pronoun}\\b`, 'g');
-            escapedText = escapedText.replace(
-                regex,
-                `<span class="bg-yellow-200 px-1 rounded" title="Gendered pronoun">${pronoun}</span>`
-            );
-        });
+        // Walk through text nodes and highlight matches
+        this.highlightTextInNode(element, pattern);
+    },
 
-        // Highlight gender-specific words
-        const genderWords = ['man', 'woman', 'male', 'female', 'boy', 'girl', 'Man', 'Woman', 'Male', 'Female', 'Boy', 'Girl'];
-        genderWords.forEach(word => {
-            const regex = new RegExp(`\\b${word}\\b`, 'g');
-            escapedText = escapedText.replace(
-                regex,
-                `<span class="bg-pink-200 px-1 rounded" title="Gender-specific term">${word}</span>`
-            );
-        });
+    /**
+     * Recursively highlight text in DOM nodes
+     * @param {Node} node - DOM node to process
+     * @param {RegExp} pattern - Pattern to match
+     */
+    highlightTextInNode(node, pattern) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            const text = node.textContent;
+            const matches = text.match(pattern);
 
-        return escapedText;
+            if (matches) {
+                const fragment = document.createDocumentFragment();
+                let lastIndex = 0;
+
+                text.replace(pattern, (match, offset) => {
+                    // Add text before match
+                    if (offset > lastIndex) {
+                        fragment.appendChild(document.createTextNode(text.substring(lastIndex, offset)));
+                    }
+
+                    // Add highlighted match
+                    const span = document.createElement('span');
+                    const lowerMatch = match.toLowerCase();
+
+                    if (['he', 'him', 'his', 'she', 'her', 'hers'].includes(lowerMatch)) {
+                        span.className = 'bg-yellow-200 px-1 rounded';
+                        span.title = 'Gendered pronoun';
+                    } else {
+                        span.className = 'bg-pink-200 px-1 rounded';
+                        span.title = 'Gender-specific term';
+                    }
+                    span.textContent = match;
+                    fragment.appendChild(span);
+
+                    lastIndex = offset + match.length;
+                });
+
+                // Add remaining text
+                if (lastIndex < text.length) {
+                    fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
+                }
+
+                node.parentNode.replaceChild(fragment, node);
+            }
+        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE') {
+            // Process child nodes
+            Array.from(node.childNodes).forEach(child => {
+                this.highlightTextInNode(child, pattern);
+            });
+        }
     },
 
     /**

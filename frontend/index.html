@@ -5,6 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LLM Bias Testing Tool</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom prose/markdown styling */
+        .prose {
+            max-width: none !important;
+            color: #1f2937;
+            line-height: 1.75;
+        }
+        .prose p {
+            margin-top: 0.75em;
+            margin-bottom: 0.75em;
+        }
+        .prose h1, .prose h2, .prose h3, .prose h4 {
+            font-weight: 600;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+            color: #111827;
+        }
+        .prose h1 { font-size: 1.5em; }
+        .prose h2 { font-size: 1.3em; }
+        .prose h3 { font-size: 1.1em; }
+        .prose ul, .prose ol {
+            margin-top: 0.75em;
+            margin-bottom: 0.75em;
+            padding-left: 1.5em;
+        }
+        .prose ul { list-style-type: disc; }
+        .prose ol { list-style-type: decimal; }
+        .prose li {
+            margin-top: 0.25em;
+            margin-bottom: 0.25em;
+        }
+        .prose strong {
+            font-weight: 600;
+            color: #111827;
+        }
+        .prose em {
+            font-style: italic;
+        }
+        .prose code {
+            background-color: #f3f4f6;
+            padding: 0.2em 0.4em;
+            border-radius: 0.25rem;
+            font-size: 0.875em;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            color: #be123c;
+        }
+        .prose pre {
+            background-color: #1f2937;
+            color: #f9fafb;
+            padding: 1em;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+        .prose pre code {
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: 0.875em;
+        }
+        .prose blockquote {
+            border-left: 4px solid #e5e7eb;
+            padding-left: 1em;
+            margin-left: 0;
+            margin-top: 1em;
+            margin-bottom: 1em;
+            color: #6b7280;
+            font-style: italic;
+        }
+        .prose a {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+        .prose a:hover {
+            color: #1d4ed8;
+        }
+    </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <!-- Header -->
@@ -156,6 +234,10 @@
             </p>
         </div>
     </footer>
+
+    <!-- Load external libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.8/dist/purify.min.js"></script>
 
     <!-- Load JavaScript modules -->
     <script src="js/api-client.js"></script>
