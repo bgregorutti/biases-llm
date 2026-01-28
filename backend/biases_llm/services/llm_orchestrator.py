@@ -8,6 +8,7 @@ from biases_llm.models.schemas import ModelResponse, ComparisonResponse
 from biases_llm.services.llm_adapter import LLMAdapter
 from biases_llm.services.openai_adapter import OpenAIAdapter
 from biases_llm.services.anthropic_adapter import AnthropicAdapter
+from biases_llm.services.transformers_adapter import TransformersAdapter
 from biases_llm.config import config_manager
 
 
@@ -43,6 +44,8 @@ class LLMOrchestrator:
             adapter = OpenAIAdapter(model_config)
         elif api_type == "anthropic":
             adapter = AnthropicAdapter(model_config)
+        elif api_type == "transformers":
+            adapter = TransformersAdapter(model_config)
         else:
             raise ValueError(f"Unsupported API type: {api_type}")
 

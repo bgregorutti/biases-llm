@@ -13,5 +13,6 @@ dependencies = [
     "openai",
     "anthropic",
     "httpx",
-    "aiofiles"
+    "aiofiles",
+    "transformers[torch]",
 ]

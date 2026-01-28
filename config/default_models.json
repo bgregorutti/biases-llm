@@ -28,6 +28,15 @@
       "requires_api_key": false
     },
     {
+      "id": "flan-t5-small",
+      "name": "Flan T5 small",
+      "provider": "lm-studio",
+      "api_type": "transformers",
+      "endpoint_env": "LM_STUDIO_ENDPOINT",
+      "model_name": "google/flan-t5-small",
+      "requires_api_key": false
+    },
+    {
       "id": "mistral-large-latest",
       "name": "Mistral Large",
       "provider": "openai",
