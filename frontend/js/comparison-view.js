@@ -116,7 +116,12 @@ const ComparisonView = {
                 const fragment = document.createDocumentFragment();
                 let lastIndex = 0;
 
-                text.replace(pattern, (match, offset) => {
+                // Use matchAll to properly iterate through matches
+                const matchIterator = text.matchAll(pattern);
+                for (const matchResult of matchIterator) {
+                    const match = matchResult[0];
+                    const offset = matchResult.index;
+
                     // Add text before match
                     if (offset > lastIndex) {
                         fragment.appendChild(document.createTextNode(text.substring(lastIndex, offset)));
@@ -137,7 +142,7 @@ const ComparisonView = {
                     fragment.appendChild(span);
 
                     lastIndex = offset + match.length;
-                });
+                }
 
                 // Add remaining text
                 if (lastIndex < text.length) {
