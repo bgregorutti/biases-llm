@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     # Application Settings
     backend_port: int = Field(8000, alias="BACKEND_PORT")
     max_concurrent_queries: int = Field(5, alias="MAX_CONCURRENT_QUERIES")
-    query_timeout_seconds: int = Field(30, alias="QUERY_TIMEOUT_SECONDS")
+    query_timeout_seconds: int = Field(60, alias="QUERY_TIMEOUT_SECONDS")
 
     # CORS Settings
     cors_origins: List[str] = Field(
